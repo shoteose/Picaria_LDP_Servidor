@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.servidor.ServidorController">
+   <children>
+      <Text layoutX="36.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porta">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button layoutX="444.0" layoutY="54.0" mnemonicParsing="false" onAction="#iniciarServidor" text="Abrir Servidor">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="inputPorta" layoutX="36.0" layoutY="54.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Text layoutX="36.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jogadores Online">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="387.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Feedback do Server">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ListView fx:id="listOnline" layoutX="36.0" layoutY="164.0" prefHeight="184.0" prefWidth="184.0" />
+      <Button layoutX="252.0" layoutY="207.0" mnemonicParsing="false" text="Atualizar Listas" />
+      <TextArea fx:id="feedback" layoutX="373.0" layoutY="164.0" prefHeight="184.0" prefWidth="184.0" />
+      <Text layoutX="264.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Status:" />
+      <Text fx:id="taON" fill="RED" layoutX="341.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OFF" />
+   </children>
+</AnchorPane>
