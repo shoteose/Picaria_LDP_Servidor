@@ -44,25 +44,22 @@ public class ClientHandler extends ServidorController implements Runnable{
 
                     if(recebido.startsWith("n")) {
 
-                        System.out.println(recebido);
-                                String[] arrOfStr = recebido.split(":");
-                                for (String a : arrOfStr) {
-                                    System.out.println(a);
-                                }
-                                Jogador b = new Jogador(arrOfStr[1]);
+                        System.out.println(recebido + " lolol");
 
+                                String[] arrOfStr = recebido.trim().split(":");
+
+                                System.out.println("Prefix: " + arrOfStr[0]);
+                                System.out.println("Name: " + arrOfStr[1]);
+
+                            Jogador b = new Jogador(arrOfStr[1]);
+                                mandarParaFeedBack(recebido);
                                 mandarParaFeedBack( recebido + " -- " + arrOfStr[1]);
                                Jogadores.add(b);
-
-
-
+                                mc.dos.writeUTF("toma de volta");
 
                     }
-                    else {
-                        mc.dos.writeUTF(this.name + ": " + recebido);
-                    }
-
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
