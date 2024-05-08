@@ -15,7 +15,7 @@ import java.net.*;
 import java.util.*;
 
 
-public class ServidorController{
+public class ServidorController implements Initializable{
     @FXML
     private TextField inputPorta;
 
@@ -28,7 +28,7 @@ public class ServidorController{
     private TextArea feedback;
 
     @FXML
-    private ListView listOnline;
+    private ListView listJogadores;
 
     public static LinkedList<Jogador> Jogadores = new LinkedList<Jogador>();
 
@@ -38,6 +38,9 @@ public class ServidorController{
     private boolean servidorTaOn = true;
 
     int cont = 0;
+
+
+
 
     @FXML
     private void iniciarServidor(ActionEvent event) {
@@ -135,6 +138,34 @@ public class ServidorController{
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        for(Jogador qwe: Jogadores){
+
+            String listViewHighScore = qwe.getNome() + " : " + qwe.getCounterWins();
+            this.listJogadores.getItems().add(listViewHighScore);
+
+        }
+    }
+
+    @FXML
+    public void atualizar() {
+
+
+
+        for(Jogador lol: Jogadores){
+
+            this.listJogadores.getItems().removeAll();
+
+        }
+
+        for(Jogador qwe: Jogadores){
+            String listViewHighScore = qwe.getNome() + " : " + qwe.getCounterWins();
+            this.listJogadores.getItems().add(listViewHighScore);
+
+        }
+    }
 }
 
 

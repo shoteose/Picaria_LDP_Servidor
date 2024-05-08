@@ -3,13 +3,14 @@ package com.example.servidor;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientHandler extends ServidorController implements Runnable{
 
     private String name;
-    final DataInputStream dis;
-    final DataOutputStream dos;
+    private DataInputStream dis;
+    private DataOutputStream dos;
     Socket s;
 
     private Jogador jogador;
@@ -26,11 +27,39 @@ public class ClientHandler extends ServidorController implements Runnable{
 
     @Override
     public void run() {
-        String recebido;
+
+        while (isloggedin){
+
+            try {
+                dis = new DataInputStream(s.getInputStream());
+
+                String recebido = dis.readUTF();
+
+                if (recebido.startsWith("nome:")) {
+                    String nomeJogador = recebido.substring(5); // Remove o prefixo "nome:"
+                    Jogador novoJogador = new Jogador(nomeJogador);
+                    ServidorController.Jogadores.add(novoJogador);
+
+                    /*synchronized(ServidorController.Jogadores) {
+                        ServidorController.Jogadores.add(novoJogador); // Adicionar à lista de jogadores
+                    }*/
+                    enviarListaJogadores();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+
+
+       /* String recebido;
 
         while(true){
             try {
                 recebido = dis.readUTF();
+                System.out.println("Received: " + recebido);
 
                 System.out.println(recebido);
 
@@ -40,32 +69,43 @@ public class ClientHandler extends ServidorController implements Runnable{
                     break; // while
                 }
 
-                for(ClientHandler mc: ServidorController.ar){
+
+
 
                     if(recebido.startsWith("n")) {
 
                         System.out.println(recebido + " lolol");
 
-                                String[] arrOfStr = recebido.trim().split(":");
+                        String[] parts = recebido.split(":");
+                        if (parts.length >= 2) {
+                            System.out.println("Prefix: " + parts[0]);
+                            System.out.println("Name: " + parts[1]);
+                        } else {
+                            System.out.println("Invalid format received.");
+                        }
 
-                                System.out.println("Prefix: " + arrOfStr[0]);
-                                System.out.println("Name: " + arrOfStr[1]);
-
-                            Jogador b = new Jogador(arrOfStr[1]);
+                            Jogador b = new Jogador(parts[1]);
                                 mandarParaFeedBack(recebido);
-                                mandarParaFeedBack( recebido + " -- " + arrOfStr[1]);
                                Jogadores.add(b);
-                                mc.dos.writeUTF("toma de volta");
+
 
                     }
-                }
+
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
+*/
+    }
 
+    private void enviarListaJogadores() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+        synchronized(ServidorController.Jogadores) {
+            oos.writeObject(ServidorController.Jogadores); // Enviar a lista atualizada de jogadores
+        }
+        oos.flush();
     }
 
     public Jogador getJogador() {
