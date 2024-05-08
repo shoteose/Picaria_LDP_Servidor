@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler extends ServidorController implements Runnable{
 
     private String name;
     final DataInputStream dis;
@@ -31,7 +31,7 @@ public class ClientHandler implements Runnable{
         while(true){
             try {
                 recebido = dis.readUTF();
-                this.recebeu= dis.readUTF();
+
                 System.out.println(recebido);
 
                 if(recebido.endsWith("logout")){
@@ -39,19 +39,23 @@ public class ClientHandler implements Runnable{
                     this.s.close();
                     break; // while
                 }
-                /**/
-                    /*StringTokenizer st = new StringTokenizer(recebido, "#");
-                    String MsgToSend = st.nextToken();
-                    String recipient = st.nextToken();
-                    for(ClientHandler mc: ServidorGlobal.ar){
-                        if(mc.name.equals(recipient) && mc.isloggedin) {
-                            mc.dos.writeUTF(name + " : " + MsgToSend);
-                            break;
-                        }
-                    }*/
+
                 for(ClientHandler mc: ServidorController.ar){
 
-                    if(recebido.equals("")) {
+                    if(recebido.startsWith("n")) {
+
+                        System.out.println(recebido);
+                                String[] arrOfStr = recebido.split(":");
+                                for (String a : arrOfStr) {
+                                    System.out.println(a);
+                                }
+                                Jogador b = new Jogador(arrOfStr[1]);
+
+                                mandarParaFeedBack( recebido + " -- " + arrOfStr[1]);
+                               Jogadores.add(b);
+
+
+
 
                     }
                     else {
