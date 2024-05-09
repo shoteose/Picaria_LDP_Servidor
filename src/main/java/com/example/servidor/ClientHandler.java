@@ -48,26 +48,15 @@ public class ClientHandler extends ServidorController implements Runnable{
 
                 if(recebido.startsWith("qs")){
 
-                    System.out.println(recebido);
-                    Thread sendMessage = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+                    System.out.println(recebido + "recebeu");
 
 
-                            try {
 
-                                dos.writeUTF(String.valueOf(index));
-                                dos.flush();
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        dos.writeUTF(recebido + "enviado");
+                        dos.flush();
 
 
-                        }
-                    });
 
-                    sendMessage.start();
 
                     index++;
 
