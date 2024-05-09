@@ -48,6 +48,7 @@ public class ClientHandler extends ServidorController implements Runnable{
 
                 if(recebido.startsWith("qs")){
 
+                    System.out.println(recebido);
                     Thread sendMessage = new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -68,9 +69,10 @@ public class ClientHandler extends ServidorController implements Runnable{
 
                     sendMessage.start();
 
+                    index++;
 
                 }
-                
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

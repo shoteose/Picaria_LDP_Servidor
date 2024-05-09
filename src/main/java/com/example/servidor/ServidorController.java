@@ -39,7 +39,7 @@ public class ServidorController implements Initializable{
 
     int cont = 0;
 
-    public static int index = 0;
+    public static int index = 1;
 
 
 
@@ -144,7 +144,7 @@ public class ServidorController implements Initializable{
 
         for(Jogador qwe: Jogadores){
 
-            String listViewHighScore = qwe.getNome() + " : " + qwe.getCounterWins();
+            String listViewHighScore = qwe.getNome() ;
             this.listJogadores.getItems().add(listViewHighScore);
 
         }
@@ -153,13 +153,7 @@ public class ServidorController implements Initializable{
     @FXML
     public void atualizar() {
 
-
-
-        for(Jogador lol: Jogadores){
-
-            this.listJogadores.getItems().removeAll();
-
-        }
+         this.listJogadores.getItems().removeAll();
 
         for(Jogador qwe: Jogadores){
             String listViewHighScore = qwe.getNome() + " : " + qwe.getCounterWins();
