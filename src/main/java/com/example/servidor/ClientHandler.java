@@ -16,6 +16,7 @@ public class ClientHandler extends ServidorController implements Runnable{
     private Jogador jogador;
     boolean isloggedin;
 
+
     String recebeu;
 
     public ClientHandler(Socket s,DataInputStream dis, DataOutputStream dos) {
@@ -36,15 +37,40 @@ public class ClientHandler extends ServidorController implements Runnable{
                 String recebido = dis.readUTF();
 
                 if (recebido.startsWith("nome:")) {
-                    String nomeJogador = recebido.substring(5); // Remove o prefixo "nome:"
+                    String[] partes = recebido.split(":");
+                    System.out.println(partes[1]);
+                    String nomeJogador = partes[1];// Remove o prefixo "nome:"
                     Jogador novoJogador = new Jogador(nomeJogador);
                     ServidorController.Jogadores.add(novoJogador);
 
-                    /*synchronized(ServidorController.Jogadores) {
-                        ServidorController.Jogadores.add(novoJogador); // Adicionar à lista de jogadores
-                    }*/
                     enviarListaJogadores();
                 }
+
+                if(recebido.startsWith("qs")){
+
+                    Thread sendMessage = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+
+                            try {
+
+                                dos.writeUTF(String.valueOf(index));
+                                dos.flush();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    });
+
+                    sendMessage.start();
+
+
+                }
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }

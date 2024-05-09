@@ -39,6 +39,7 @@ public class ServidorController implements Initializable{
 
     int cont = 0;
 
+    public static int index = 0;
 
 
 
@@ -80,7 +81,7 @@ public class ServidorController implements Initializable{
         } else if (cont == 1){
 
             servidorTaOn= true;
-            cont = 1;
+            cont = 0;
             mudarCorOn(true);
             mandarParaFeedBack("Servidor voltou a aceitar clientes");
         }
