@@ -9,8 +9,8 @@ import java.net.Socket;
 public class ClientHandler extends ServidorController implements Runnable{
 
     private String name;
-    private DataInputStream dis;
-    private DataOutputStream dos;
+    private static DataInputStream dis;
+    private static DataOutputStream dos;
     Socket s;
 
     private Jogador jogador;
@@ -40,6 +40,7 @@ public class ClientHandler extends ServidorController implements Runnable{
                     String[] partes = recebido.split(":");
                     System.out.println(partes[1]);
                     String nomeJogador = partes[1];// Remove o prefixo "nome:"
+                    this.name=nomeJogador;
                     Jogador novoJogador = new Jogador(nomeJogador);
                     ServidorController.Jogadores.add(novoJogador);
 
@@ -48,11 +49,22 @@ public class ClientHandler extends ServidorController implements Runnable{
 
                 if(recebido.startsWith("qs")){
 
-                    System.out.println(recebido + "recebeu");
+                    System.out.println(recebido + " : -- servidor recebeu");
 
                     // Respondendo ao cliente
                     dos.writeUTF(recebido + "enviado");
                     dos.flush();
+
+
+                    dos.writeUTF("...----..." + this.name + ": " + recebido);
+                    dos.flush();
+
+                    for(ClientHandler mc: ServidorController.ar){
+
+
+                            mc.dos.writeUTF(this.name + ": " + recebido);
+
+                    }
 
                     index++;
                 }
